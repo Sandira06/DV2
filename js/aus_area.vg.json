@@ -1,0 +1,98 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 300,
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" },
+    "axis": {
+      "labelColor": "#c8c0b0",
+      "titleColor": "#c8c0b0",
+      "gridColor":  "#2a2a3e",
+      "domainColor": "#3a3a5e"
+    },
+    "legend": { "labelColor": "#c8c0b0", "titleColor": "#c8c0b0" }
+  },
+  "data": { "url": "js/aus_perf.csv", "format": { "type": "csv" } },
+  "layer": [
+    {
+      "transform": [
+        { "filter": "datum.total > 0" },
+        { "fold": ["gold", "silver", "bronze"], "as": ["medal_type", "count"] },
+        {
+          "calculate": "datum.medal_type === 'gold' ? 'Gold' : datum.medal_type === 'silver' ? 'Silver' : 'Bronze'",
+          "as": "Medal"
+        }
+      ],
+      "mark": { "type": "area", "opacity": 0.85, "line": { "strokeWidth": 1.5 } },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "axis": { "title": null, "labelAngle": -45, "labelFontSize": 10 }
+        },
+        "y": {
+          "field": "count",
+          "type": "quantitative",
+          "stack": "zero",
+          "axis": { "title": "Medals Won" }
+        },
+        "color": {
+          "field": "Medal",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Gold", "Silver", "Bronze"],
+            "range": ["#FFD700", "#C0C0C0", "#CD7F32"]
+          },
+          "legend": { "title": "Medal" }
+        },
+        "order": { "field": "Medal", "sort": ["Gold", "Silver", "Bronze"] },
+        "tooltip": [
+          { "field": "year",  "type": "ordinal",      "title": "Year" },
+          { "field": "Medal", "type": "nominal",      "title": "Medal" },
+          { "field": "count", "type": "quantitative", "title": "Count" },
+          { "field": "total", "type": "quantitative", "title": "Total" },
+          { "field": "rank",  "type": "quantitative", "title": "Rank" }
+        ]
+      }
+    },
+    {
+      "data": { "values": [{ "year": "2000", "label": "Sydney 2000", "sublabel": "58 medals — best ever", "y": 62 }] },
+      "layer": [
+        {
+          "mark": { "type": "rule", "color": "#ffffff", "strokeWidth": 1, "strokeDash": [4, 3], "opacity": 0.5 },
+          "encoding": {
+            "x": { "field": "year", "type": "ordinal" },
+            "y": { "datum": 0 },
+            "y2": { "datum": 62 }
+          }
+        },
+        {
+          "mark": { "type": "text", "align": "center", "baseline": "bottom", "fontSize": 10, "fontWeight": "bold", "color": "#f9d278", "dy": -2 },
+          "encoding": {
+            "x":     { "field": "year", "type": "ordinal" },
+            "y":     { "field": "y",    "type": "quantitative" },
+            "text":  { "field": "label" }
+          }
+        },
+        {
+          "mark": { "type": "text", "align": "center", "baseline": "bottom", "fontSize": 9, "color": "#c8c0b0", "dy": -14 },
+          "encoding": {
+            "x":    { "field": "year",     "type": "ordinal" },
+            "y":    { "field": "y",        "type": "quantitative" },
+            "text": { "field": "sublabel" }
+          }
+        }
+      ]
+    },
+    {
+      "data": { "values": [{ "year": "1956", "label": "Home Games", "y": 39 }] },
+      "mark": { "type": "text", "align": "center", "baseline": "bottom", "fontSize": 9, "fontStyle": "italic", "color": "#9aa5b8", "dy": -2 },
+      "encoding": {
+        "x":    { "field": "year",  "type": "ordinal" },
+        "y":    { "field": "y",     "type": "quantitative" },
+        "text": { "field": "label" }
+      }
+    }
+  ]
+}

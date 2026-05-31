@@ -1,0 +1,110 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 300,
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" },
+    "axis": {
+      "labelColor": "#c8c0b0",
+      "titleColor": "#c8c0b0",
+      "gridColor":  "#2a2a3e",
+      "domainColor": "#3a3a5e"
+    },
+    "legend": { "labelColor": "#c8c0b0", "titleColor": "#c8c0b0" }
+  },
+  "data": { "url": "js/aus_perf.csv", "format": { "type": "csv" } },
+  "transform": [
+    { "filter": "datum.total > 0" },
+    { "joinaggregate": [{ "op": "mean", "field": "total", "as": "avg_medals" }] },
+    { "calculate": "datum.total - datum.avg_medals", "as": "deviation" },
+    { "calculate": "datum.deviation >= 0 ? 'Above Average' : 'Below Average'", "as": "performance" }
+  ],
+  "layer": [
+    {
+      "mark": { "type": "bar", "cornerRadius": 3 },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "axis": { "title": null, "labelAngle": -45, "labelFontSize": 10 }
+        },
+        "y": {
+          "field": "deviation",
+          "type": "quantitative",
+          "axis": { "title": "Medals vs Historical Average" }
+        },
+        "color": {
+          "field": "performance",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Above Average", "Below Average"],
+            "range": ["#f4b942", "#e07b54"]
+          },
+          "legend": { "title": "Performance" }
+        },
+        "tooltip": [
+          { "field": "year",       "type": "ordinal",      "title": "Year" },
+          { "field": "total",      "type": "quantitative", "title": "Medals" },
+          { "field": "avg_medals", "type": "quantitative", "title": "Avg", "format": ".1f" },
+          { "field": "deviation",  "type": "quantitative", "title": "Deviation", "format": "+.1f" },
+          { "field": "rank",       "type": "quantitative", "title": "Rank" }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "rule", "strokeDash": [6, 3], "color": "#888", "strokeWidth": 1.5 },
+      "encoding": { "y": { "datum": 0 } }
+    },
+    {
+      "data": { "values": [{ "x": "2000", "y": 36, "label": "Sydney 2000", "sublabel": "+36 above avg" }] },
+      "layer": [
+        {
+          "mark": { "type": "text", "align": "center", "baseline": "bottom", "fontSize": 9, "fontWeight": "bold", "color": "#f9d278", "dy": -6 },
+          "encoding": {
+            "x":    { "field": "x",     "type": "ordinal" },
+            "y":    { "field": "y",     "type": "quantitative" },
+            "text": { "field": "label" }
+          }
+        },
+        {
+          "mark": { "type": "text", "align": "center", "baseline": "bottom", "fontSize": 8, "color": "#c8c0b0", "dy": -16 },
+          "encoding": {
+            "x":    { "field": "x",        "type": "ordinal" },
+            "y":    { "field": "y",        "type": "quantitative" },
+            "text": { "field": "sublabel" }
+          }
+        }
+      ]
+    },
+    {
+      "data": { "values": [{ "x": "1976", "y": -17, "label": "1976", "sublabel": "0 gold medals" }] },
+      "layer": [
+        {
+          "mark": { "type": "text", "align": "center", "baseline": "top", "fontSize": 9, "fontWeight": "bold", "color": "#e07b54", "dy": 2 },
+          "encoding": {
+            "x":    { "field": "x",     "type": "ordinal" },
+            "y":    { "field": "y",     "type": "quantitative" },
+            "text": { "field": "label" }
+          }
+        },
+        {
+          "mark": { "type": "text", "align": "center", "baseline": "top", "fontSize": 8, "color": "#c8c0b0", "dy": 14 },
+          "encoding": {
+            "x":    { "field": "x",        "type": "ordinal" },
+            "y":    { "field": "y",        "type": "quantitative" },
+            "text": { "field": "sublabel" }
+          }
+        }
+      ]
+    },
+    {
+      "data": { "values": [{ "label": "Historical avg (~22)" }] },
+      "mark": { "type": "text", "align": "left", "baseline": "bottom", "fontSize": 9, "fontStyle": "italic", "color": "#888", "x": 5, "dy": -4 },
+      "encoding": {
+        "y":    { "datum": 0 },
+        "text": { "field": "label" }
+      }
+    }
+  ]
+}

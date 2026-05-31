@@ -1,0 +1,68 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 440,
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" }
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "projection": { "type": "naturalEarth1" },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#0d1b2a",
+        "stroke": "#5a7aa0",
+        "strokeWidth": 0.8
+      }
+    },
+    {
+      "data": { "url": "js/host_data.csv", "format": { "type": "csv" } },
+      "projection": { "type": "naturalEarth1" },
+      "mark": {
+        "type": "circle",
+        "opacity": 0.78,
+        "stroke": "#ffffff",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude":  { "field": "lat", "type": "quantitative" },
+        "size": {
+          "field": "athletes",
+          "type": "quantitative",
+          "scale": { "range": [30, 1400] },
+          "legend": {
+            "title": "Athletes",
+            "orient": "bottom-left",
+            "labelColor": "#e8e0d0",
+            "titleColor": "#e8e0d0"
+          }
+        },
+        "color": {
+          "field": "season",
+          "type": "nominal",
+          "scale": { "domain": ["Summer", "Winter"], "range": ["#f4b942", "#7ec8e3"] },
+          "legend": {
+            "title": "Season",
+            "orient": "top-right",
+            "labelColor": "#e8e0d0",
+            "titleColor": "#e8e0d0"
+          }
+        },
+        "tooltip": [
+          { "field": "city",    "type": "nominal",      "title": "City" },
+          { "field": "country", "type": "nominal",      "title": "Country" },
+          { "field": "year",    "type": "quantitative", "title": "Year" },
+          { "field": "season",  "type": "nominal",      "title": "Season" },
+          { "field": "athletes","type": "quantitative", "title": "Athletes" },
+          { "field": "nations", "type": "quantitative", "title": "Nations" }
+        ]
+      }
+    }
+  ]
+}

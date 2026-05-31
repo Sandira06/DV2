@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 420,
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" },
+    "axis": {
+      "labelColor": "#c8c0b0",
+      "titleColor": "#c8c0b0",
+      "gridColor":  "#2a2a3e",
+      "domainColor": "#3a3a5e"
+    },
+    "legend": { "labelColor": "#c8c0b0", "titleColor": "#c8c0b0" }
+  },
+  "data": { "url": "js/medals_data.csv", "format": { "type": "csv" } },
+  "transform": [
+    { "filter": "datum.summer_total > 100" },
+    { "fold": ["summer_gold", "summer_total"], "as": ["type", "value"] },
+    {
+      "calculate": "datum.type === 'summer_gold' ? 'Gold Medals' : 'Total Medals'",
+      "as": "metric"
+    }
+  ],
+  "layer": [
+    {
+      "transform": [
+        { "filter": "datum.type === 'summer_gold'" },
+        {
+          "lookup": "country",
+          "from": {
+            "data": { "url": "js/medals_data.csv", "format": { "type": "csv" } },
+            "key": "country",
+            "fields": ["summer_total"]
+          },
+          "as": ["total_for_rule"]
+        }
+      ],
+      "mark": { "type": "rule", "strokeWidth": 2, "color": "#2a3a5a" },
+      "encoding": {
+        "y": {
+          "field": "country",
+          "type": "nominal",
+          "sort": { "field": "summer_total", "order": "descending" },
+          "axis": { "title": null, "labelFontSize": 11 }
+        },
+        "x":  { "field": "value", "type": "quantitative", "axis": { "title": "Summer Olympic Medals" } },
+        "x2": { "field": "total_for_rule" }
+      }
+    },
+    {
+      "mark": { "type": "point", "filled": true, "size": 120 },
+      "encoding": {
+        "y": {
+          "field": "country",
+          "type": "nominal",
+          "sort": { "field": "summer_total", "order": "descending" },
+          "axis": { "title": null }
+        },
+        "x": { "field": "value", "type": "quantitative" },
+        "color": {
+          "field": "metric",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Gold Medals", "Total Medals"],
+            "range": ["#FFD700", "#7ec8e3"]
+          },
+          "legend": { "title": null }
+        },
+        "tooltip": [
+          { "field": "country", "type": "nominal",      "title": "Country" },
+          { "field": "metric",  "type": "nominal",      "title": "Metric" },
+          { "field": "value",   "type": "quantitative", "title": "Count" }
+        ]
+      }
+    }
+  ]
+}

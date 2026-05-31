@@ -1,0 +1,30 @@
+country,code,continent,country_id,summer_gold,summer_silver,summer_bronze,summer_total,winter_gold,winter_silver,winter_bronze,winter_total,total_medals,lat,lon
+United States,USA,Americas,840,1061,834,736,2631,107,113,87,307,2938,37.09,-95.71
+Soviet Union,URS,Europe,643,395,319,296,1010,78,57,59,194,1204,61.52,105.32
+Germany,GER,Europe,276,275,284,285,844,92,88,60,240,1084,51.17,10.45
+Great Britain,GBR,Europe,826,274,295,293,862,10,4,12,26,888,55.38,-3.44
+France,FRA,Europe,250,231,258,262,751,36,35,52,123,874,46.23,2.21
+Australia,AUS,Oceania,36,164,173,207,544,5,5,5,15,559,-25.27,133.78
+China,CHN,Asia,156,263,199,174,636,15,10,10,35,671,35.86,104.2
+Russia,RUS,Europe,643,182,162,169,513,50,39,35,124,637,61.52,105.32
+Italy,ITA,Europe,380,246,214,237,697,57,57,57,171,868,41.87,12.57
+Sweden,SWE,Europe,752,147,172,179,498,57,46,55,158,656,60.13,18.64
+Japan,JPN,Asia,392,170,163,202,535,14,22,22,58,593,36.2,138.25
+Hungary,HUN,Europe,348,180,153,175,508,0,2,4,6,514,47.16,19.5
+Norway,NOR,Europe,578,60,51,47,158,148,133,124,405,563,60.47,8.47
+Canada,CAN,Americas,124,73,107,136,316,73,64,62,199,515,56.13,-106.35
+Netherlands,NED,Europe,528,97,101,128,326,45,44,41,130,456,52.13,5.29
+South Korea,KOR,Asia,410,96,89,91,276,32,11,10,53,329,35.91,127.77
+Kenya,KEN,Africa,404,36,41,31,108,0,0,0,0,108,-0.02,37.91
+Cuba,CUB,Americas,192,78,68,80,226,0,0,0,0,226,21.52,-77.78
+Brazil,BRA,Americas,76,37,42,72,151,0,0,0,0,151,-14.24,-51.93
+New Zealand,NZL,Oceania,554,45,23,46,114,0,1,0,1,115,-40.9,174.89
+Spain,ESP,Europe,724,47,73,73,193,1,0,2,3,196,40.46,-3.75
+Poland,POL,Europe,616,69,80,129,278,7,8,7,22,300,51.92,19.15
+India,IND,Asia,356,10,9,16,35,0,0,0,0,35,20.59,78.96
+Jamaica,JAM,Americas,388,26,36,16,78,0,0,0,0,78,18.11,-77.3
+Argentina,ARG,Americas,32,21,26,31,78,0,0,0,0,78,-38.42,-63.62
+Ukraine,UKR,Europe,804,48,37,52,137,2,1,4,7,144,48.38,31.17
+South Africa,RSA,Africa,710,23,27,27,77,0,0,0,0,77,-30.56,22.94
+Ethiopia,ETH,Africa,231,24,9,21,54,0,0,0,0,54,9.15,40.49
+Mexico,MEX,Americas,484,13,21,26,60,0,0,0,0,60,23.63,-102.55

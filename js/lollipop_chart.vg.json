@@ -1,0 +1,112 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 520,
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" },
+    "axis": {
+      "labelColor": "#c8c0b0",
+      "titleColor": "#c8c0b0",
+      "gridColor":  "#2a2a3e",
+      "domainColor": "#3a3a5e"
+    },
+    "legend": { "labelColor": "#c8c0b0", "titleColor": "#c8c0b0" }
+  },
+  "data": { "url": "js/aus_sport.csv", "format": { "type": "csv" } },
+  "layer": [
+    {
+      "mark": { "type": "rule", "color": "#3a4a60", "strokeWidth": 2.5 },
+      "encoding": {
+        "y": {
+          "field": "sport",
+          "type": "nominal",
+          "sort": { "field": "total", "order": "descending" },
+          "axis": { "title": null, "labelFontSize": 11 }
+        },
+        "x":  { "datum": 0 },
+        "x2": { "field": "total", "type": "quantitative" }
+      }
+    },
+    {
+      "mark": { "type": "rule", "color": "#FFD700", "strokeWidth": 2.5 },
+      "encoding": {
+        "y": {
+          "field": "sport",
+          "type": "nominal",
+          "sort": { "field": "total", "order": "descending" }
+        },
+        "x":  { "datum": 0 },
+        "x2": { "field": "gold", "type": "quantitative" }
+      }
+    },
+    {
+      "mark": { "type": "point", "filled": true, "size": 130, "shape": "circle" },
+      "encoding": {
+        "y": {
+          "field": "sport",
+          "type": "nominal",
+          "sort": { "field": "total", "order": "descending" },
+          "axis": { "title": null }
+        },
+        "x": { "field": "total", "type": "quantitative", "axis": { "title": "Total Medals Won" } },
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "scale": { "scheme": "tableau10" },
+          "legend": { "title": "Category" }
+        },
+        "tooltip": [
+          { "field": "sport",    "type": "nominal",      "title": "Sport" },
+          { "field": "gold",     "type": "quantitative", "title": "Gold" },
+          { "field": "silver",   "type": "quantitative", "title": "Silver" },
+          { "field": "bronze",   "type": "quantitative", "title": "Bronze" },
+          { "field": "total",    "type": "quantitative", "title": "Total" },
+          { "field": "category", "type": "nominal",      "title": "Category" }
+        ]
+      }
+    },
+    {
+      "transform": [{ "filter": "datum.sport === 'Swimming'" }],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#f9d278",
+        "dx": 10
+      },
+      "encoding": {
+        "y": {
+          "field": "sport",
+          "type": "nominal",
+          "sort": { "field": "total", "order": "descending" }
+        },
+        "x": { "field": "total", "type": "quantitative" },
+        "text": { "value": "35% of all AUS medals" }
+      }
+    },
+    {
+      "transform": [{ "filter": "datum.sport === 'Athletics'" }],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 9,
+        "fontStyle": "italic",
+        "color": "#9aa5b8",
+        "dx": 10
+      },
+      "encoding": {
+        "y": {
+          "field": "sport",
+          "type": "nominal",
+          "sort": { "field": "total", "order": "descending" }
+        },
+        "x": { "field": "total", "type": "quantitative" },
+        "text": { "value": "incl. Cathy Freeman's iconic 400m gold" }
+      }
+    }
+  ]
+}

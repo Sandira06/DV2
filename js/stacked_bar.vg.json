@@ -1,0 +1,55 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 380,
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" },
+    "axis": {
+      "labelColor": "#c8c0b0",
+      "titleColor": "#c8c0b0",
+      "gridColor":  "#2a2a3e",
+      "domainColor": "#3a3a5e"
+    },
+    "legend": { "labelColor": "#c8c0b0", "titleColor": "#c8c0b0" }
+  },
+  "data": { "url": "js/medals_data.csv", "format": { "type": "csv" } },
+  "transform": [
+    { "filter": "datum.summer_total > 200" },
+    { "fold": ["summer_gold", "summer_silver", "summer_bronze"], "as": ["medal_type", "count"] },
+    {
+      "calculate": "datum.medal_type === 'summer_gold' ? 'Gold' : datum.medal_type === 'summer_silver' ? 'Silver' : 'Bronze'",
+      "as": "Medal"
+    }
+  ],
+  "mark": { "type": "bar", "cornerRadiusTopLeft": 2, "cornerRadiusTopRight": 2 },
+  "encoding": {
+    "x": {
+      "field": "country",
+      "type": "nominal",
+      "sort": { "field": "summer_total", "order": "descending" },
+      "axis": { "title": null, "labelAngle": -30, "labelFontSize": 11 }
+    },
+    "y": {
+      "field": "count",
+      "type": "quantitative",
+      "axis": { "title": "Number of Medals" },
+      "stack": true
+    },
+    "color": {
+      "field": "Medal",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Gold", "Silver", "Bronze"],
+        "range": ["#FFD700", "#C0C0C0", "#CD7F32"]
+      },
+      "legend": { "title": "Medal Type" }
+    },
+    "tooltip": [
+      { "field": "country",      "type": "nominal",      "title": "Country" },
+      { "field": "Medal",        "type": "nominal",      "title": "Medal Type" },
+      { "field": "count",        "type": "quantitative", "title": "Count" },
+      { "field": "summer_total", "type": "quantitative", "title": "Total Summer Medals" }
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 280,
+  "height": 280,
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" },
+    "legend": { "labelColor": "#c8c0b0", "titleColor": "#c8c0b0", "labelFontSize": 10 }
+  },
+  "data": { "url": "js/aus_sport.csv", "format": { "type": "csv" } },
+  "layer": [
+    {
+      "transform": [
+        {
+          "aggregate": [
+            { "op": "sum", "field": "total", "as": "total_medals" },
+            { "op": "sum", "field": "gold",  "as": "gold_medals" }
+          ],
+          "groupby": ["category"]
+        }
+      ],
+      "mark": {
+        "type": "arc",
+        "innerRadius": 65,
+        "outerRadius": 120,
+        "padAngle": 0.025,
+        "cornerRadius": 4
+      },
+      "encoding": {
+        "theta": { "field": "total_medals", "type": "quantitative", "stack": true },
+        "color": {
+          "field": "category",
+          "type": "nominal",
+          "scale": { "scheme": "tableau20" },
+          "legend": { "title": "Category", "columns": 2 }
+        },
+        "tooltip": [
+          { "field": "category",     "type": "nominal",      "title": "Category" },
+          { "field": "total_medals", "type": "quantitative", "title": "Total Medals" },
+          { "field": "gold_medals",  "type": "quantitative", "title": "Gold Medals" }
+        ]
+      }
+    },
+    {
+      "data": { "values": [{ "label": "559", "sublabel": "Total Medals" }] },
+      "layer": [
+        {
+          "mark": { "type": "text", "align": "center", "baseline": "middle", "fontSize": 22, "fontWeight": "bold", "color": "#f4b942", "dy": -10 },
+          "encoding": { "text": { "field": "label" } }
+        },
+        {
+          "mark": { "type": "text", "align": "center", "baseline": "middle", "fontSize": 10, "color": "#9aa5b8", "dy": 12 },
+          "encoding": { "text": { "field": "sublabel" } }
+        }
+      ]
+    }
+  ]
+}

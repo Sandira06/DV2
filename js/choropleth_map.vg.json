@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 440,
+  "config": {
+    "background": "transparent",
+    "view": { "stroke": "transparent" }
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "projection": { "type": "naturalEarth1" },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#1a1a2e",
+        "stroke": "#6a7aa0",
+        "strokeWidth": 0.8
+      }
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "transform": [
+        {
+          "lookup": "id",
+          "from": {
+            "data": { "url": "js/medals_data.csv", "format": { "type": "csv" } },
+            "key": "country_id",
+            "fields": ["country", "total_medals", "summer_gold", "summer_total", "winter_total", "continent"]
+          }
+        },
+        { "filter": "datum.total_medals > 0" }
+      ],
+      "projection": { "type": "naturalEarth1" },
+      "mark": { "type": "geoshape", "stroke": "#6a7aa0", "strokeWidth": 0.8 },
+      "encoding": {
+        "color": {
+          "field": "total_medals",
+          "type": "quantitative",
+          "scale": { "type": "log", "scheme": "goldorange", "domain": [1, 3000] },
+          "legend": {
+            "title": "Total Medals",
+            "orient": "bottom-right",
+            "labelColor": "#e8e0d0",
+            "titleColor": "#e8e0d0",
+            "tickCount": 5
+          }
+        },
+        "tooltip": [
+          { "field": "country", "type": "nominal", "title": "Country" },
+          { "field": "total_medals", "type": "quantitative", "title": "Total Medals" },
+          { "field": "summer_gold", "type": "quantitative", "title": "Summer Gold" },
+          { "field": "summer_total", "type": "quantitative", "title": "Summer Total" },
+          { "field": "winter_total", "type": "quantitative", "title": "Winter Total" }
+        ]
+      }
+    }
+  ]
+}
