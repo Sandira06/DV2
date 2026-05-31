@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Olympic Legacy — A Global Story</title>
+
+  <!-- Pure.css -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css" />
+
+  <!-- Google Fonts: Oswald (display) + Lato (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet" />
+
+  <!-- Vega, Vega-Lite, Vega-Embed -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+
+
+  <!-- External stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-rings" aria-hidden="true">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+  </div>
+
+  <div class="page-wrap hero-content">
+    <!--p class="hero-eyebrow">A Data Story &nbsp;·&nbsp; The Modern Olympic Games</p>-->
+    <h1 class="hero-title">THE <span>WORLD OLYMPICS</span><br>LEGACY</h1>
+    <p class="hero-subtitle">One hundred and twenty-eight years of human ambition, sporting glory,<br>and a nation's pride personified'.</p>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="stat-num">206</div>
+        <div class="stat-label">Nations competing today</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num">11,656</div>
+        <div class="stat-label">Athletes at Tokyo 2020</div>
+      </div>
+      <div class="hero-stat" style="border-color: var(--blue-light)">
+        <div class="stat-num" style="color:var(--blue-light)">559</div>
+        <div class="stat-label">Australia's all-time medals</div>
+      </div>
+      <div class="hero-stat" style="border-color: var(--red-accent)">
+        <div class="stat-num" style="color:var(--red-accent)">#5</div>
+        <div class="stat-label">Australia's rank at Paris 2024</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll to explore</div>
+</header>
+
+<!-- ═══════════════════ SECTION 1 — GLOBAL DOMINANCE ═══════════════════ -->
+<section id="global">
+  <div class="page-wrap">
+    <div class="section-intro">
+      <h2>Who Owns the Podium?</h2>
+      <h3>All-Time Medal Leaders Since 1896</h3>
+      <p>
+        Since Athens 1896, over <em class="italic">17,500 medals</em> have been awarded across Summer and Winter Games combined.
+        The United States dominates the all-time table, accumulating more than twice the medals of any other nation.
+        Yet when adjusted for population or GDP, the picture shifts dramatically, small nations like Norway and Australia
+        reveal extraordinary per-capita efficiency.
+      </p>
+    </div>
+
+    <!-- Scoreboard -->
+    <div class="scoreboard">
+      <div class="score-item">
+        <div class="snum gold-num">2,938</div>
+        <div class="slabel">🇺🇸 USA All-Time</div>
+      </div>
+      <div class="score-item">
+        <div class="snum" style="color:#c0c0c0">1,204</div>
+        <div class="slabel">🇷🇺 Soviet Union</div>
+      </div>
+      <div class="score-item">
+        <div class="snum" style="color:#cd7f32">868</div>
+        <div class="slabel">🇬🇧 Great Britain</div>
+      </div>
+      <div class="score-item">
+        <div class="snum blue-num">559</div>
+        <div class="slabel">🇦🇺 Australia</div>
+      </div>
+      <div class="score-item">
+        <div class="snum red-num">~27M</div>
+        <div class="slabel">Australia's Population</div>
+      </div>
+    </div>
+
+    <!-- Map 1: Choropleth -->
+    <div class="vis-card full">
+      <div class="vis-title">World Choropleth — Total Olympic Medals by Country</div>
+      <div class="vis-subtitle">Hover over countries to explore their medal tallies · Click a continent in the legend to filter</div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-choropleth" style="min-height:440px;"></div>
+      <div class="vis-annotation">
+        <strong style="color:var(--gold)">How to read:</strong> Darker amber/orange shading indicates a higher cumulative medal count (log scale) across all Summer and Winter Olympics since 1896.
+        Countries in grey have no recorded medal wins in this dataset. Australia's distinctive amber-orange hue reflects its position as a per-capita overperformer in the Southern Hemisphere.
+        <span class="source-note">Sources: International Olympic Committee (IOC) All-Time Medal Table · Wikipedia Olympic Medal Tables</span>
+      </div>
+      </div>
+    </div>
+
+    <!-- Dumbbell chart -->
+    <div class="vis-card full">
+      <div class="vis-title">Gold vs Total Medals — Top Summer Olympic Nations</div>
+      <div class="vis-subtitle">Gold dot (yellow) vs Total medals dot (blue) — the gap reveals conversion efficiency</div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-dumbbell" style="min-height:400px;"></div>
+      <div class="vis-annotation">
+        A <strong style="color:var(--gold)">dumbbell chart</strong> emphasises the gap between a nation's gold medal count and their total medal haul. Countries where the dots sit close together convert near every medal to gold (e.g. Cuba). Wide gaps suggest many silver and bronze finishes. Hungary's ratio reveals remarkable podium consistency across aquatics and fencing.
+      </div>
+      </div>
+    </div>
+
+    <!-- Bubble chart -->
+    <div class="vis-card full">
+      <div class="vis-title">Summer vs Winter — A Nation's Complete Olympic Portrait</div>
+      <div class="vis-subtitle">Bubble size = total medals · Click a continent in the legend to highlight · Log scale on both axes</div>
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="filterBubble('all')">All Continents</button>
+        <button class="toggle-btn" onclick="filterBubble('Europe')">Europe</button>
+        <button class="toggle-btn" onclick="filterBubble('Americas')">Americas</button>
+        <button class="toggle-btn" onclick="filterBubble('Asia')">Asia</button>
+        <button class="toggle-btn" onclick="filterBubble('Oceania')">Oceania</button>
+        <button class="toggle-btn" onclick="filterBubble('Africa')">Africa</button>
+      </div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-bubble" style="min-height:380px;"></div>
+      <div class="vis-annotation">
+        Countries in the <strong style="color:var(--gold)">top-right corner</strong> dominate both Summer and Winter Games (e.g. Norway, USA, Germany). Australia (<span class="anno-tag">AUS</span>) sits far-right on the Summer axis but very low on Winter, reflecting a climate-driven sporting culture. African nations cluster bottom-left, largely summer-only competitors due to geographic and climatic constraints.
+      </div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Key Insight</div>
+      <p>Australia ranks among the world's top 10 all-time nations with just 27 million people, roughly the population of Saudi Arabia, yet with more than 10 times the medal count. This is no accident: systematic investment in elite sport infrastructure, especially after Sydney 2000, underpins this performance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SECTION 2 — HOST CITIES MAP ═══════════════════ -->
+<section id="host-cities">
+  <div class="page-wrap">
+    <div class="section-intro">
+      <h2>Where the World Gathers</h2>
+      <h3>Every Olympic Host City Since 1896</h3>
+      <p>
+        Hosting the Olympics is a statement of global stature. From Athens to Paris, from Melbourne to Tokyo,
+        the Games have circled the globe, though Europe and the Americas have dominated the hosting rights.
+        Australia has hosted twice: <em class="italic">Melbourne 1956</em> and <em class="italic">Sydney 2000</em>.
+        Both were turning points for Australian sport.
+      </p>
+    </div>
+
+    <!-- Toggle summer/winter -->
+    <div class="toggle-group">
+      <button class="toggle-btn active" id="btn-all" onclick="filterHostMap('all')">All Games</button>
+      <button class="toggle-btn" id="btn-summer" onclick="filterHostMap('Summer')">Summer Only</button>
+      <button class="toggle-btn" id="btn-winter" onclick="filterHostMap('Winter')">Winter Only</button>
+    </div>
+
+    <!-- Map 2: Proportional Symbol -->
+    <div class="vis-card full">
+      <div class="vis-title">Proportional Symbol Map — Olympic Host Cities</div>
+      <div class="vis-subtitle">Circle size = number of athletes · Colour = season · Hover for details</div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-host-map" style="min-height:440px;"></div>
+      <div class="vis-annotation">
+        <strong style="color:var(--gold)">Yellow circles</strong> mark Summer Games hosts; <strong style="color:var(--blue-light)">blue circles</strong> mark Winter Games hosts.
+        The dramatic growth in circle size from left to right illustrates how athlete participation has exploded — from 241 athletes in Athens 1896 to over 11,000 in Tokyo 2020.
+        Note the geographic concentration in Western Europe and North America, Asia and Oceania have been underrepresented as hosts.
+        <span class="source-note">Sources: International Olympic Committee · Wikipedia "Olympic Games" series</span>
+      </div>
+      </div>
+    </div>
+
+    <!-- Heatmap of hosting -->
+    <div class="vis-card full">
+      <div class="vis-title">Hosting Heatmap — Olympic Games by Continent &amp; Decade</div>
+      <div class="vis-subtitle">Darker = more Games hosted in that decade</div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-heatmap" style="min-height:220px;"></div>
+      <div class="vis-annotation">
+        Europe's decades-long dominance in hosting is unmistakable, it has hosted at least one Games in virtually every decade since 1896.
+        Oceania (Australia + New Zealand) has hosted only twice, both in the modern era. The spread to Asia accelerated after 1960, signalling Olympic globalisation.
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SECTION 3 — GROWTH OVER TIME ═══════════════════ -->
+<section id="growth">
+  <div class="page-wrap">
+    <div class="section-intro">
+      <h2>Bigger, Bolder, Further</h2>
+      <h3>The Growth of the Summer Olympic Games</h3>
+      <p>
+        The modern Olympics have grown from a European curiosity to a global spectacle. The number of competing
+        nations has risen from 14 in 1896 to 206 today, effectively the entire world. The number of events
+        has multiplied sevenfold. Boycotts (1980 Moscow, 1984 Los Angeles) caused temporary dips, while
+        the post-Cold War opening brought a surge in participation.
+      </p>
+    </div>
+
+    <div class="vis-card full">
+      <div class="vis-title">Athletes &amp; Nations Over Time (Summer Olympics)</div>
+      <div class="vis-subtitle">Gold line = Athletes (left axis) · Blue dashed line = Nations (right axis) · Hover for details</div>
+      <div class="custom-legend">
+        <div class="legend-item">
+          <div class="legend-line" style="background:var(--gold);"></div>
+          <span>Athletes participating (left axis)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-line" style="background:var(--blue-light); border-top: 2px dashed var(--blue-light); height:0;"></div>
+          <span>Nations competing (right axis)</span>
+        </div>
+      </div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-growth" style="min-height:320px;"></div>
+      <div class="vis-annotation">
+        The <span class="anno-tag">1976</span> dip reflects the African boycott over New Zealand's rugby ties to apartheid South Africa.
+        The <span class="anno-tag">1980</span> dip reflects the US-led boycott of Moscow. Recovery was swift, by 1988 Seoul, athlete numbers surpassed all previous records.
+        The 2024 Paris Games saw a slight reduction due to deliberate IOC capping to manage costs and sustainability.
+      </div>
+      </div>
+    </div>
+
+    <!-- Stacked bar - top countries -->
+    <div class="vis-card full">
+      <div class="vis-title">Medal Breakdown — Top Nations by Total Summer Medals</div>
+      <div class="vis-subtitle">Stacked gold/silver/bronze medals for nations with 200+ Summer medals</div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-stacked" style="min-height:380px;"></div>
+      <div class="vis-annotation">
+        The stacked bar chart reveals that nations vary significantly in their <strong style="color:var(--gold)">gold-to-total ratio</strong>.
+        The United States and Cuba consistently convert at a high gold rate. Germany (combining East, West, and unified teams) shows a large silver and bronze share reflecting fierce competition at the top.
+        Australia's stack, while smaller in absolute terms, reflects its remarkable breadth across aquatics, cycling, and athletics.
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SECTION 4 — AUSTRALIA ═══════════════════ -->
+<section id="australia">
+  <div class="page-wrap">
+    <div class="aus-flag-strip"></div>
+    <div class="section-intro">
+      <h2>Australia's Olympic Journey</h2>
+      <h3>From Federation to Paris — A Nation That Rises to the Occasion</h3>
+      <p>
+        Australia has competed in every Summer Olympics since 1896, one of only a handful of nations to do so.
+        But the modern era tells the most compelling story. After a poor showing in Montreal 1976 (zero gold medals),
+        Australia restructured its elite sports system, establishing the Australian Institute of Sport in 1981.
+        The results were transformative: Sydney 2000 remains Australia's finest Olympic hour.
+      </p>
+    </div>
+
+    <div class="scoreboard">
+      <div class="score-item">
+        <div class="snum gold-num">164</div>
+        <div class="slabel">Summer Gold Medals</div>
+      </div>
+      <div class="score-item">
+        <div class="snum blue-num">2000</div>
+        <div class="slabel">Best year (Sydney)</div>
+      </div>
+      <div class="score-item">
+        <div class="snum red-num">1976</div>
+        <div class="slabel">Worst year (0 Gold)</div>
+      </div>
+      <div class="score-item">
+        <div class="snum gold-num">Swimming</div>
+        <div class="slabel">Top sport (196 medals)</div>
+      </div>
+    </div>
+
+    <!-- Area chart medals over time -->
+    <div class="vis-card full">
+      <div class="vis-title">Australia's Medal Tally — Summer Olympics 1896–2024</div>
+      <div class="vis-subtitle">Stacked area showing gold/silver/bronze breakdown · Hover to see rank and medal breakdown</div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-aus-area" style="min-height:300px;"></div>
+      <div class="vis-annotation">
+        <strong style="color:var(--gold)">Melbourne 1956</strong> was a watershed, as host nation, Australia surged to 35 medals and 3rd place overall.
+        <strong style="color:var(--gold)">Sydney 2000</strong> remains the pinnacle: 58 medals (16 gold), finishing 4th globally. The post-Sydney plateau reflects the maturation of elite sport systems worldwide, making top-5 finishes increasingly competitive. Paris 2024 reversed the recent decline with 53 medals.
+      </div>
+      </div>
+    </div>
+
+    <!-- Rank + medals dual axis -->
+    <div class="vis-card full">
+      <div class="vis-title">Australia's Medal Count vs Nation Rank</div>
+      <div class="vis-subtitle">Gold line = Medals won (left) · Red dashed = Final ranking (right, lower is better)</div>
+      <div class="custom-legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--gold);"></div>
+          <span>Total Medals (left axis)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--red-accent);"></div>
+          <span>Final Rank (right axis — lower = better)</span>
+        </div>
+      </div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-aus-rank" style="min-height:280px;"></div>
+      <div class="vis-annotation">
+        The divergence between medal count and rank illustrates how <em>competitive context</em> matters. Australia won more medals in 1996 than in 1980, but finished lower due to more nations performing well. The <span class="anno-tag">1976</span> anomaly (rank 32, 5 medals) was Australia's wake-up call that led to the Australian Institute of Sport's founding in 1981.
+      </div>
+      </div>
+    </div>
+
+    <!-- Diverging bar -->
+    <div class="vis-card full">
+      <div class="vis-title">Australia vs Their Own Average — Outperformance &amp; Dips</div>
+      <div class="vis-subtitle">Each bar shows how far Australia's medal count was above or below their Summer Games historical average (~22 medals)</div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-diverging" style="min-height:300px;"></div>
+      <div class="vis-annotation">
+        This diverging bar chart reveals four clear eras: <strong style="color:var(--gold)">Early dominance (1896–1956)</strong> — Australia often exceeded its average in the founding decades.
+        <strong style="color:var(--red-accent)">The AIS era low (1976–1984)</strong> — far below average. <strong style="color:var(--gold)">The golden era (1996–2008)</strong> — consistently above average. <strong style="color:var(--text-muted)">Modern competitiveness (2012–2024)</strong> — close to average but with a strong Paris revival.
+      </div>
+      </div>
+    </div>
+
+    <!-- Lollipop by sport -->
+    <div class="vis-card full">
+      <div class="vis-title">Australia's Medals by Sport — Where the Wins Come From</div>
+      <div class="vis-subtitle">Circle at end = Total medals · Gold line portion = Gold medals only · Coloured by sport category</div>
+      <div class="vis-body">
+      <div class="vega-wrap" id="vis-lollipop" style="min-height:500px;"></div>
+      <div class="vis-annotation">
+        <strong style="color:var(--gold)">Swimming dominates</strong> with 196 all-time medals which is nearly 35% of Australia's entire medal haul. This reflects both cultural and infrastructure advantages: Australia's climate, beach culture, and world-class training facilities produce elite swimmers consistently. Athletics and Cycling form the second tier. Note how relatively few medals come from winter and indoor sports which is a reflection of Australia's summer-sports identity.
+        <span class="source-note">Source: Australian Olympic Committee · IOC Medal Database</span>
+      </div>
+      </div>
+    </div>
+
+    <!-- Donut chart -->
+    <div class="pure-g">
+      <div class="pure-u-1 pure-u-md-1-2">
+        <div class="vis-card" style="height:100%;">
+          <div class="vis-title">Medal Share by Sport Category</div>
+          <div class="vis-subtitle">Australia's cumulative medals grouped by category</div>
+          <div style="display:flex; justify-content:center;">
+            <div id="vis-donut" style="width:320px; height:320px;"></div>
+          </div>
+          <div class="vis-annotation">
+            Aquatics (Swimming, Diving, Water Polo, Surfing) accounts for nearly 40% of all Australian Olympic medals. This reflects decades of investment in swim infrastructure from grassroots to elite level.
+          </div>
+        </div>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-2">
+        <div class="vis-card" style="height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div class="vis-title">Australia's Top Olympic Sports</div>
+            <div class="vis-subtitle">All-time medal count, broken down</div>
+          </div>
+          <div style="margin: 1rem 0;">
+            <div class="insight-box" style="margin: 0 0 1rem;">
+              <div class="insight-label">🏊 Swimming</div>
+              <p>196 medals (35% of all Australian Olympic medals). World-class performances from Dawn Fraser to Ian Thorpe to Kyle Chalmers.</p>
+            </div>
+            <div class="insight-box" style="margin: 0 0 1rem;">
+              <div class="insight-label">🏃 Athletics</div>
+              <p>75 medals across sprints, middle distance, and field events. Cathy Freeman's 400m gold at Sydney 2000 remains Australia's most iconic Olympic moment.</p>
+            </div>
+            <div class="insight-box" style="margin: 0;">
+              <div class="insight-label">🚴 Cycling</div>
+              <p>47 medals spanning track, road and BMX. Australia's velodrome program has been a consistent medal factory since the 1990s.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-box" style="margin-top: 1.5rem;">
+      <div class="insight-label">Australia's Path Forward</div>
+      <p>
+        Brisbane 2032 will mark Australia's third Summer Olympics, and the first in Queensland. The host-nation boost historically adds 30–50% to medal tallies.
+        If the Sydney 2000 effect is any guide, Australia could target a top-3 finish in the medal table for the first time in its history.
+        Early planning, elite sport investment, and the natural advantages of competing at home all point toward a defining moment for Australian Olympic sport.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="page-wrap">
+    <div class="footer-rings" aria-hidden="true">
+      <div class="footer-ring"></div><div class="footer-ring"></div>
+      <div class="footer-ring"></div><div class="footer-ring"></div>
+      <div class="footer-ring"></div>
+    </div>
+    <p style="margin-bottom:0.6rem; color: var(--text-muted); font-size:0.85rem;">
+      <strong style="font-family: var(--font-display); letter-spacing:0.05em;">THE WORLD OLYMPICS LEGACY</strong>
+      &nbsp;·&nbsp; A Data Visualisation Story
+    </p>
+    <p>Data Sources: <a href="https://www.olympic.org/olympic-games" target="_blank">International Olympic Committee (IOC)</a> · <a href="https://en.wikipedia.org/wiki/All-time_Olympic_Games_medal_table" target="_blank">Wikipedia All-Time Medal Table</a></p>
+    <p style="margin-top:0.4rem;">Visualisations created with <a href="https://vega.github.io/vega-lite/" target="_blank">Vega-Lite v5</a> · Layout created with <a href="https://purecss.io" target="_blank">Pure.css</a></p>
+    <p style="margin-top:0.6rem; color: var(--text-muted);">Author: Sandira Polketiyage &nbsp;·&nbsp; FIT2179 Data Visualisation, Monash University &nbsp;·&nbsp; Date: 31 May 2026</p>
+    <p style="margin-top:0.3rem; color: var(--text-dim); font-size:0.7rem;">Acknowledgement of AI Use: AI tools were used to assist with grammar checking and Vega-Lite JSON structuring.</p>
+    <p style="margin-top:0.3rem; color: var(--text-dim); font-size:0.7rem;">All data, design decisions, narrative, and visualisation idiom creations are the author's own original work.</p>
+  </div>
+</footer>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════════════════════════════════
+  All 12 Vega-Lite visualisations are embedded via vega_lite_vis.js.
+  Each vegaEmbed() call in that file loads its spec from a separate .vg.json
+  file inside the js/ folder. Data is loaded from 5 CSV files also in js/.
+  This <script> tag is placed at the bottom of <body> so every <div id="...">
+  above is already in the DOM when vegaEmbed() runs.
+════════════════════════════════════════════════════════════════════════════ -->
+<script src="vega_lite_vis.js"></script>
+
+</body>
+</html>
